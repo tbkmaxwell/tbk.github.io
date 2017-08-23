@@ -2,26 +2,26 @@
 *	(C)2017 VeryIDE
 *	js/copy.js
 *	author: Lay veryide@qq.com
-*	desc: å¤åˆ¶æ–‡æ¡ˆç»„ä»¶
+*	desc: 复制文案组件
 *	date: 2017/03/17
 */
 var Copy = {
 			
-	//å¤åˆ¶æˆåŠŸæç¤º
+	//复制成功提示
 	Succeed: function(){
 
-		//æˆåŠŸæç¤º
-		R.toast("success", 'å·²å¤åˆ¶ï¼Œè¯·æ‰“å¼€æ‰‹æœºæ·˜å®', 3, {'unique': 'toast'});
+		//成功提示
+		R.toast("success", '已复制，请打开手机淘宝', 3, {'unique': 'toast'});
 
-		//æ”¹å†™æŒ‰é’®
-		Copy.Button.html('å·²å¤åˆ¶');
+		//改写按钮
+		Copy.Button.html('已复制');
 
 	},
 	
-	//ä½¿ç”¨å…¼å®¹æ¨¡å¼
+	//使用兼容模式
 	Compatibility: function(){
 
-		//è‡ªåŠ¨é€‰æ‹©æ–‡æœ¬
+		//自动选择文本
 		document.addEventListener("selectionchange", function(e) {
 			tkl = document.getElementById("intro");
 			window.getSelection().selectAllChildren( tkl );
@@ -31,26 +31,26 @@ var Copy = {
 
 	Init: function( conf ){
 
-		//å¤åˆ¶æŒ‰é’®
+		//复制按钮
 		Copy.Button = R(conf.button);
 
-		//è§†å›¾å®¹å™¨
+		//视图容器
 		Copy.Vessel = R(conf.vessel);
 		
-		//å†…å®¹å®¹å™¨
+		//内容容器
 		Copy.Content = R(conf.content);
 
 		
-		//æµè§ˆå™¨æ”¯æŒå‰ªè´´æ¿
+		//浏览器支持剪贴板
 		if( Copy.Button.attr('display') || !Clipboard.isSupported() ){
 
-			//å…¼å®¹æ¨¡å¼
+			//兼容模式
 			Copy.Compatibility();
 
-			//å¤åˆ¶æ–‡æœ¬
+			//复制文本
 			var clipboard = new Clipboard( conf.vessel + 'button' );
 
-			//å¤åˆ¶æˆåŠŸ
+			//复制成功
 			clipboard.on('success', function (e) {
 				console.info('Action:', e.action);
 				console.info('Text:', e.text);
@@ -61,14 +61,14 @@ var Copy = {
 		
 		}else{
 			Copy.Compatibility();
-			//å¤åˆ¶æ–‡æœ¬
+			//复制文本
 			var clipboard = new Clipboard( conf.button, {
 				text: function(trigger) {
 					return R.String( Copy.Content.html() ).stripTags().trim();
 				}
 			});
 			
-			//å¤åˆ¶æˆåŠŸ
+			//复制成功
 			clipboard.on('success', function (e) {
 				console.info('Action:', e.action);
 				console.info('Text:', e.text);
@@ -77,7 +77,7 @@ var Copy = {
 				Copy.Succeed();
 			});
 			
-			//å¤åˆ¶å¤±è´¥
+			//复制失败
 			clipboard.on('error', function (e) {
 				console.error('Action:', e.action);
 				console.error('Trigger:', e.trigger);
@@ -90,5 +90,5 @@ var Copy = {
 
 };
 
-//åˆå§‹åŒ–ç»„ä»¶
+//初始化组件
 Copy.Init( { 'button' : '.copy_tkl', 'content' : '#intro', 'vessel' : '#member-code' } );
