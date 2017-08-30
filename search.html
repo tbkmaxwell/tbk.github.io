@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>搜索商品</title>
+  <style>
+  #main {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  </style>
+</head>
+<body>
+  <iframe src="" width="" height="" id="main"></iframe>
+  <script>
+    var search = location.search;
+    var url = search.slice(1);
+    var iframe = document.getElementById("main");
+    iframe.setAttribute("src", decodeURIComponent(url));
+  </script>
+
+</body>
+</html>
